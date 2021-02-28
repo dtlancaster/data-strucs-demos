@@ -1,8 +1,10 @@
-##### Table of Contents  
-[Binary Search Trees](#headers)   
+### Table of Contents  
+[1. Binary Search Trees](#headers)   
+<a name="headers"/>
+[2. Dynamic Sequences](#headers)
 <a name="headers"/>
 
-## Binary Search Trees
+## 1. Binary Search Trees
 
 I've built a binary search tree and use it to solve a problem involving runway requests by airlines. In this program, I demonstrate that actual data consisting of large meta-information can be stored outside the data structure, while the binary search tree can be keyed on a particular field within the data. Several binary search tree operations beyond a dictionary data structure, like computing the minimum element in a set of the predecessor element of a key within the set. Note that in this implementation, it is not required to balance the tree. The input data will be sufficiently random to keep the tree balanced.
 
@@ -56,3 +58,39 @@ Since all requests are stored as an array, we are now ready to solve the runway 
 For each request, we can check for validity in only *O*(log *n*) time. Throughout the entirety of the algorithm, each request is inserted into the tree at most once, and removed at most once, both of which take only *O*(log *n*) time per element. So the total running time of the algorithm is *O*(*n* log *n*).
 
 The output is formatted as follows. For each 't' command, we print the current time followed by all successful airlines that have used the runway after the previous 't' command. We assume that there is a 't' command at the end of input that advances current time to the last successful request.
+
+---
+
+## 2. Dynamic Sequences
+
+In this program, I've built a robust binary tree, balanced using randomized mechanisms, to store a dynamic sequence. This tree is then used to solve a problem of ordering 100000 football teams such that each time *i* in the ordering defeated team *i* + 1.
+
+### I. Randomly-Built Binary Trees
+
+A randomly built binary search tree (RBST) provides all binary search tree operations in only *O*(log *n*) time with high probability. In this program, an RBST is built do encode a dynamic sequence. A dynamic sequence *a*<sub>1</sub> ... *a*<sub>*n*</sub> is a mathematical object that represents a sequence of items. The *i*<sup>*th*</sup> item in the sequence is *a*<sub>*i*</sub>. A dynamic sequence can be encoded in a RBST, by storing some item *a*<sub>*i*</sub> at the root, and recursively storing the sequence *a*<sub>1</sub> ... *a*<sub>*i*-1</sub> as the left subtree of the root, and the sequence *a*<sub>*i*+1</sub> ... *a*<sub>*n*</sub> as the right subtree of the root. If each node in the tree is augmented with subtree sizes, then the *i*<sup>*th*</sup> item can be accessed using the ```select``` operation.
+
+The ```Node``` class is implemented with all the required accessor and mutator methods. It also contains the methods ```incSize``` which increments the size of the tree and ```updateSize``` which updates the size of the tree rooted at the node.
+
+The ```RBST``` class implements a randomly-built binary search tree. It contains instance fields ```root``` which is a reference to the root node of the tree, and a ```Random``` object to make probabilistic decisions in the ```insert``` routine. The class is currently filled with two constructors, a ```getSize()``` method that returns the size of the tree, and several public wrapper methods that are described below:
+
+(a) ```insertNormal(team, rank)```: This method inserts the data ```team``` at position ```rank```. This is a simple insert routine without any balancing mechanism.
+
+(b) ```print()```: This method performs an inorder traversal of the tree and prints the sequence stored in the tree.
+
+(c) ```split(rank)```: This method splits the tree at position specified by ```rank```. It returns an array of two RBSTs, the first being the left side of the split, and the second being the right side of the split.
+
+(d) ```insert(team, rank)```: This method inserts the data ```team``` at position ```rank```. The insert routine maintains balance in a probabilistic manner. THat is, it inserts the new node at the root of the tree with probability 1/*n*, where *n* is the size of the tree including the new node. This is ideally done by splitting the tree at rank ```rank - 1```, and attaching the left side and right side of the split as the left and right children of the new node respectively. With probability 1 - 1/*n*, the data is recursively inserted to either the left tree or the right tree depending upon the position *rank* (whether rank is less or greater than the rank of the root).
+
+(e) ```select(rank)```: This method returns the node in the RBST at position ```rank```. An element is rank *k* if it appears in position *k* in the inorder traversal of the tree. Since the tree encodes a sequence, the element with rank *k* = 1 and *k* = *n* are the first and last elements in the sequence respectively.
+
+Note that the above methods are public interfaces, which are wrapper methods that contain calls to corresponding private methods. It is written this way for two reasons. Firstly, all the above methods are recursive, and operate on a single node which represents the tree rooted at that node, instead of a ```RBST``` object. Secondly, it allows the user to interact much more easily.
+
+### II. Ordering Football Teams
+
+Suppose *n* football teams, numbered 1 ... *n*, all play each other in a large tournament, where there are no ties. In file ```Ordering.java```, you will find a method called ```boolean didXbeatY(int x, int y)``` which returns ```true``` if team *x* won its game against team *y*, ```false``` otherwise. The task for this demo is to compute an ordering of the teams, say *a*<sub>1</sub> ... *a*<sub>*n*</sub>, so that team *a*<sub>1</sub> defeated team *a*<sub>2</sub>, team *a*<sub>2</sub> defeated team *a*<sub>3</sub>, and so on. Lets call such a sequence valid.
+
+Note that there could be many possible valid solutions. For example, if team 1 beat team 2, team 2 beat team 3, etc., and team *n* beat team 1, then any "cyclic rotation" of the sequence 1, 2, 3, ... n (e.g., 3, 4, 5, ... *n* - 1, *n*, 1, 2) will be a valid solution.
+
+The algorithm used to solve this problem is straightforward. It involves building up a sequence (stored in a ```RBST```) to which we add teams 1 ... *n* one by one. Suppose we have built up a valid sequence of teams 1 ... *k* - 1 and we want to add team *k* in a position so that the entire sequence is valid. It turns out that there always exists such a position, and that we can find it quickly usin gout balanced ```RBST```. If team *k* defeated the first team in our sequence, then we can just add it to the beginning. Likewise, if team *k* lost to the last team in the sequence, we can add it to the end. If neither of these cases holds, then let us imagine the sequence with arrows going from the winning team to the losing team. That is *a* → *b* means that team *a* won against team *b*. Since we know that team *k* lost to the first team and beat the last team, there must be some location in the ordering where there is an adjacent pair of teams (*a*, *b*) for which *a* → *k* and *k* → *b*. It is thus feasible to place *k* between *a* and *b*. Moreover, we can binary search for such a position with only *O*(log *k*) ≤ *O*(log *n*) calls to ```select```. Since each call to select takes only *O*(log *n*) time with high probability, this gives a total running time of *O*(*n* log<sup>2</sup> *n*) with high probability to solve the entire problem. This algorithm is implemented in the method ```orderTeams```.
+
+---
