@@ -1,6 +1,5 @@
 ### Table of Contents  
-[1. Binary Search Trees](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#1-binary-search-trees)
-
+[1. Binary Search Trees](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#1-binary-search-trees)  
 [2. Dynamic Sequences](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#2-dynamic-sequences)
 
 ## 1. Binary Search Trees
