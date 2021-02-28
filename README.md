@@ -92,3 +92,15 @@ Note that there could be many possible valid solutions. For example, if team 1 b
 The algorithm used to solve this problem is straightforward. It involves building up a sequence (stored in a ```RBST```) to which we add teams 1 ... *n* one by one. Suppose we have built up a valid sequence of teams 1 ... *k* - 1 and we want to add team *k* in a position so that the entire sequence is valid. It turns out that there always exists such a position, and that we can find it quickly usin gout balanced ```RBST```. If team *k* defeated the first team in our sequence, then we can just add it to the beginning. Likewise, if team *k* lost to the last team in the sequence, we can add it to the end. If neither of these cases holds, then let us imagine the sequence with arrows going from the winning team to the losing team. That is *a* → *b* means that team *a* won against team *b*. Since we know that team *k* lost to the first team and beat the last team, there must be some location in the ordering where there is an adjacent pair of teams (*a*, *b*) for which *a* → *k* and *k* → *b*. It is thus feasible to place *k* between *a* and *b*. Moreover, we can binary search for such a position with only *O*(log *k*) ≤ *O*(log *n*) calls to ```select```. Since each call to select takes only *O*(log *n*) time with high probability, this gives a total running time of *O*(*n* log<sup>2</sup> *n*) with high probability to solve the entire problem. This algorithm is implemented in the method ```orderTeams```.
 
 ---
+
+## 3. Graphs
+
+This program demonstrates graph traversal and shortest path algorithms. In particular, we will solve water jugs with a depth-first search traversal, and the word ladder problem using breadth-first search. Both traversals are performed on "implicit graphs"--graphs whose nodes and edges are revealed while traversing it.
+
+### I. Filling Water Jugs
+
+Consider a scenario where you are staniding next to a river with a head of cabbage and two water jugs, which have inteer sizes *A* ≤ 1000 and *B* ≤ 1000. In order to boil the cabbage for your dinner, you would like to measure out exactly *C* units of water. For this problem, given *A*, *B*, and *C*, we are able to compute how to do this, or to determine if the task is impossible.
+
+In order to solve this, we perform a depth-first search through a graph where each node corresponds to a pair of integers (*a*, *b*), indicating that we are in the state where jug 1 contains *a* units of water and jug 2 contains *b* units of water. We start from the state (0, 0) where both jugs are empty, and the goal is to reach a state (*a*, *b*) with *a* + *b* = *C*. There are three possible actions to take to move between states: filling one of the jugs to its capacity, emptying out one of the jugs, or pouring the contents of one jug into another (until the first becomes empty or the second reaches its capacity). If the program is able to find a solution, it prints out a step-by-step transcript of the solution.
+
+In ```Jugs.java```, we use a double dimensional array to represent the states we have visited.
