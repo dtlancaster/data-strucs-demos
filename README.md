@@ -13,19 +13,19 @@ A binary search tree is a data structure that maintains a collection of keys (al
 
 The binary search tree is keyed on an integer ```time```. The ```Node``` class is implemented with two data fields--```time``` and ```req_index```. It contains appropriate accessors and mutators. The second part of this implementation is dependent on access to airline runway requests, which contain meta-data (flight name, source, destination, etc) for each request. The requests are stored as an array, and implement a binary search tree keyed on ```time``` with associated value ```req_index``` that points to the index of the request in our data array. All our needed operations for our binary search tree are implemented in the file ```BST.java```. The binary search tree supports the following operations:
 
-(a) ```insert(time, req_index)```: This method inserts an integer ```time``` along with the associated value ```req_index``` into the tree. Note that the tree is keyed on ```time```.
+```insert(time, req_index)```: This method inserts an integer ```time``` along with the associated value ```req_index``` into the tree. Note that the tree is keyed on ```time```.
 
-(b)```pred(time)```: This returns the node within the binary search tree that is the predecessor of ```time```, i.e., the largest integer smaller or equal to ```time```. This returns ```null``` if there is no predecessor.
+```pred(time)```: This returns the node within the binary search tree that is the predecessor of ```time```, i.e., the largest integer smaller or equal to ```time```. This returns ```null``` if there is no predecessor.
 
-(c)```succ(time)```: This returns the node within the binary search tree that is the successor of ```time```, i.e., the smallest integer greater or equal to ```time```. This returns ```null``` if there is no successor.
+```succ(time)```: This returns the node within the binary search tree that is the successor of ```time```, i.e., the smallest integer greater or equal to ```time```. This returns ```null``` if there is no successor.
 
-(d)```min()```: This returns pointer to the minimum element in the binary search tree, or ```null``` if the tree is empty.
+```min()```: This returns pointer to the minimum element in the binary search tree, or ```null``` if the tree is empty.
 
-(e)```max()```: This returns a pointer to the maximum element in the binary search tree, or ```null``` if the tree is empty.
+```max()```: This returns a pointer to the maximum element in the binary search tree, or ```null``` if the tree is empty.
 
-(f)```delete(time)```: This removes the node with the key ```time``` if it is present, otherwise does nothing.
+```delete(time)```: This removes the node with the key ```time``` if it is present, otherwise does nothing.
 
-(g)```print()```: This method prints the contents of the tree in sorted order, by doing an inorder traversal of the tree.
+```print()```: This method prints the contents of the tree in sorted order, by doing an inorder traversal of the tree.
 
 Note that most of the above methods are public wrapper methods for private recursive methods. From the user's point of view, only these public methods are called--but since all operations in a binary search tree are recursive, they need to be implemented as private methods.
 
@@ -49,7 +49,7 @@ The code in ```RunwayReservation.java``` reads through the input file (from ```S
 
 Since all requests are stored as an array, we are now ready to solve the runway reservation problem. We need to use a binary search tree keyed on time (so the inorder traversal of the tree prints the requests sorted on time) to store all valid or successful requests. We process all the requests in order. The following pseudocode solves this problem at a high level.
 
-(a) For each request ```reqs[i]```, do the following:
+For each request ```reqs[i]```, do the following:
 1. If the request is 'r', then check if it is a valid request (there is a grace period of *k* units between this request and its previous and next reserved requests). If it is valid, then insert it into a BST *T*.
 2. If the request is 't', update the current time, and remove and print all requests from tree *T* with times that are strictly less than the current time. These are the successful requests who have used the runway.
 
@@ -71,15 +71,15 @@ The ```Node``` class is implemented with all the required accessor and mutator m
 
 The ```RBST``` class implements a randomly-built binary search tree. It contains instance fields ```root``` which is a reference to the root node of the tree, and a ```Random``` object to make probabilistic decisions in the ```insert``` routine. The class is currently filled with two constructors, a ```getSize()``` method that returns the size of the tree, and several public wrapper methods that are described below:
 
-(a) ```insertNormal(team, rank)```: This method inserts the data ```team``` at position ```rank```. This is a simple insert routine without any balancing mechanism.
+```insertNormal(team, rank)```: This method inserts the data ```team``` at position ```rank```. This is a simple insert routine without any balancing mechanism.
 
-(b) ```print()```: This method performs an inorder traversal of the tree and prints the sequence stored in the tree.
+```print()```: This method performs an inorder traversal of the tree and prints the sequence stored in the tree.
 
-(c) ```split(rank)```: This method splits the tree at position specified by ```rank```. It returns an array of two RBSTs, the first being the left side of the split, and the second being the right side of the split.
+```split(rank)```: This method splits the tree at position specified by ```rank```. It returns an array of two RBSTs, the first being the left side of the split, and the second being the right side of the split.
 
-(d) ```insert(team, rank)```: This method inserts the data ```team``` at position ```rank```. The insert routine maintains balance in a probabilistic manner. THat is, it inserts the new node at the root of the tree with probability 1/*n*, where *n* is the size of the tree including the new node. This is ideally done by splitting the tree at rank ```rank - 1```, and attaching the left side and right side of the split as the left and right children of the new node respectively. With probability 1 - 1/*n*, the data is recursively inserted to either the left tree or the right tree depending upon the position *rank* (whether rank is less or greater than the rank of the root).
+```insert(team, rank)```: This method inserts the data ```team``` at position ```rank```. The insert routine maintains balance in a probabilistic manner. THat is, it inserts the new node at the root of the tree with probability 1/*n*, where *n* is the size of the tree including the new node. This is ideally done by splitting the tree at rank ```rank - 1```, and attaching the left side and right side of the split as the left and right children of the new node respectively. With probability 1 - 1/*n*, the data is recursively inserted to either the left tree or the right tree depending upon the position *rank* (whether rank is less or greater than the rank of the root).
 
-(e) ```select(rank)```: This method returns the node in the RBST at position ```rank```. An element is rank *k* if it appears in position *k* in the inorder traversal of the tree. Since the tree encodes a sequence, the element with rank *k* = 1 and *k* = *n* are the first and last elements in the sequence respectively.
+```select(rank)```: This method returns the node in the RBST at position ```rank```. An element is rank *k* if it appears in position *k* in the inorder traversal of the tree. Since the tree encodes a sequence, the element with rank *k* = 1 and *k* = *n* are the first and last elements in the sequence respectively.
 
 Note that the above methods are public interfaces, which are wrapper methods that contain calls to corresponding private methods. It is written this way for two reasons. Firstly, all the above methods are recursive, and operate on a single node which represents the tree rooted at that node, instead of a ```RBST``` object. Secondly, it allows the user to interact much more easily.
 
