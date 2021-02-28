@@ -1,9 +1,5 @@
 ##### Table of Contents  
-[Binary Search Trees](#headers)
-
-[1. Binary Search Tree](#headers)
-[Emphasis](#emphasis)  
-...snip...    
+[Binary Search Trees](#headers)   
 <a name="headers"/>
 
 ## Binary Search Trees
