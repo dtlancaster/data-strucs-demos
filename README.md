@@ -1,7 +1,7 @@
 ### Table of Contents  
 [1. Binary Search Trees](#headers)   
 <a name="headers"/>
-[2. Dynamic Sequences](#headers)
+[2. Dynamic Sequences]
 <a href="https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#2-dynamic-sequences"/>
 
 ## 1. Binary Search Trees
