@@ -118,3 +118,14 @@ We also need a simple FIFO queue data structure, implemented in ```Queue.java```
 The word ladder is implemented in ```WordLadder.java```. This file loads all the 4-letter words from the dictionary onto a string map. It also acquires user input for the start and end words. This file also prints the shortest sequence of words to go from the start to end words, or prints such a sequence is impossible.
 
 ---
+
+### 4. Hash Functions
+
+This program demonstrates hash functions. Specifically, you are given 4 hash functions, and the task is to play the role of a malicious adversary, who having acquired the knowledge of these functions, is interested in producing keys that all hash to the table index. Assume that *n* keys are hashed into a table of size *n*. If *C* is the largest possible key that can be hashed, then *C*/*n* is the faction of keys that can be hashed to the same index. If *C*/*n* ≥ *n*, then according to the pigeonhole principle, we can find a set of *n* keys that all hash to the same table index. So we will assume *C* = *n*<sup>2</sup>. Let *k* be the key being hashed. Then we have the following hash functions.
+
+1. ```hash1```(*k*) = *k* mod *n*.
+2. ```hash2```(*k*) = (*n*/*C*) *k*.
+3. ```hash3```(*k*) = ((2971*k* + 101923) mod 128189) mod *n*.
+4. ```hash4```(*k*) is the first number generated from a pseudo-random number generator (the ```Random``` class in Java) with seed *k*.
+
+---
