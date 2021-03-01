@@ -103,4 +103,11 @@ Consider a scenario where you are staniding next to a river with a head of cabba
 
 In order to solve this, we perform a depth-first search through a graph where each node corresponds to a pair of integers (*a*, *b*), indicating that we are in the state where jug 1 contains *a* units of water and jug 2 contains *b* units of water. We start from the state (0, 0) where both jugs are empty, and the goal is to reach a state (*a*, *b*) with *a* + *b* = *C*. There are three possible actions to take to move between states: filling one of the jugs to its capacity, emptying out one of the jugs, or pouring the contents of one jug into another (until the first becomes empty or the second reaches its capacity). If the program is able to find a solution, it prints out a step-by-step transcript of the solution.
 
-In ```Jugs.java```, we use a double dimensional array to represent the states we have visited.
+In ```Jugs.java```, we use a double dimensional array to represent the states we have visited. Note that the graph is implicit, meaning the graph is discovered as we run depth-first search. We also utilize "backpointers" to print the solution. Every time a new state is visited, say (*x*, *y*), the previous state (*px*, *py*) is recorded. This information will be used to print the solution. A string can also be attached to print meaningful information about the actions that lead to state (*x*, *y*).
+
+### II. Word Ladder
+
+Consider a word ladder that can be formed between two 4-letter words: lose → lost → lest → best → beat  
+Each word is formed from the previous word by changing exactly one letter. In this program, we find the shortest possible set of words that transforms the start word into the end word. Note that all valid words should belong to the dictionary (file ```dictionary4```) and valid letters are small case 'a' through 'z'.
+
+The solution to this is to perform a breadth-first search through a graph where each node corresponds to a word, and edges correspond to possible transitions from a given word to the next. To solve this effectively, we use two data structures. The first is a ```StringMap```, that is a hash map of a set of words. The hash map will be used for two things--to store valid words from ```dictionary4```, and secondly, to keep track of visited and previous nodes during breadth-first search. We can use the ```key``` field to store the visited words, and the corresponding ```value``` field to store "backpointers"--the word that is visited 
