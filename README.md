@@ -1,7 +1,8 @@
 ### Table of Contents  
 [1. Binary Search Trees](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#1-binary-search-trees)  
 [2. Dynamic Sequences](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#2-dynamic-sequences)  
-[3. Graphs](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#3-graphs)
+[3. Graphs](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#3-graphs)  
+[4. Hash Functions](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#4-hash-functions)
 
 ## 1. Binary Search Trees
 
@@ -119,7 +120,7 @@ The word ladder is implemented in ```WordLadder.java```. This file loads all the
 
 ---
 
-### 4. Hash Functions
+## 4. Hash Functions
 
 This program demonstrates hash functions. Specifically, you are given 4 hash functions, and the task is to play the role of a malicious adversary, who having acquired the knowledge of these functions, is interested in producing keys that all hash to the table index. Assume that *n* keys are hashed into a table of size *n*. If *C* is the largest possible key that can be hashed, then *C*/*n* is the faction of keys that can be hashed to the same index. If *C*/*n* ≥ *n*, then according to the pigeonhole principle, we can find a set of *n* keys that all hash to the same table index. So we will assume *C* = *n*<sup>2</sup>. Let *k* be the key being hashed. Then we have the following hash functions.
 
@@ -129,3 +130,33 @@ This program demonstrates hash functions. Specifically, you are given 4 hash fun
 4. ```hash4```(*k*) is the first number generated from a pseudo-random number generator (the ```Random``` class in Java) with seed *k*.
 
 ---
+
+## 5. Hash Tables
+
+This program builds hash tables and uses them to develop a simple spell checker application. We will also use spatial hashing to the cloest pair of points among a set of points in the two dimensional plane.
+
+### I. Spellchecker
+
+We will be building a rudamentary spell checker--one that is capable of suggesting alternate spellings to words that are misspelled by exactly one character. This is achieved by first building a string set data structure implemented as a hash table, that is capable of storing all words in the English dictionary. It will then be possible to query this data structure for all possible alternate spellings of a word.
+
+The ```StringNode``` class provides the basic data structure for this implementation, complete with a constructor and appropriate get and set methods. The ```StringSet``` class fully supports operations ```insert```, ```find```, and ```print```. It also contains a method ```hash``` that hashes an input String to valid table indices using a polynomial hash function. Note that the ```StringSet``` class contains a constructor that only allocates a table of size 100. If the number of elements stored in this table reaches its size, then the table expands to twice the size of the original, and re-hash the elements.
+
+The ```SpellChecker``` class contains the ```main``` method of the spell checker application. An object of the ```StringSet``` class is declared, and is loaded with words from the dictionary. The main while loop waits for user input, and then provides alternate spellings to the user input that differ in at most one character. Note that only words that can be modifying at most one character are suggested, not words that are obtained by adding or removing characters.
+
+### II. Closest Pair of Points
+
+In this program, we will be computing the closest pair of points among one million points on the 2D plane using spatial hashing. Finding the closest pair of points has many applications; in machine learning classification, hierarchical clustering, collision detection in games and more.
+
+The input is given in the file ```points.txt``` that contains one million points, described by its ```x``` and ```y``` coordinates on the unit square (each ```x``` and ```y``` coordinate lies in 0, 1)). The file contains each ```x``` and ```y``` coordinate of a point in a line, separated by a space.
+
+The naive solution to this is to compute the distance between every pair of points, and always keep track of the minimum distance computed. This takes *O*(*n*<sup>2</sup>) time, and is infeasible in our case, where *n* = 1000000. Instead we divide the unit square into *b* x *b* grids, each of size 1/*b* x 1/*b*. Each point is therefore hashed into its specific grid, and needs to be only compared against points in its grid and the neighboring 8 grids. This significantly reduces the number of pairs of points we look at, provided we choose a good grid size.
+
+Each of these grid cells contain a linked list to store all the points, and roughly follows these steps:
+1. Allocate a 2D array of grid cells, for a particular choice of *b*.
+2. Read the input file, and hash each point to its corresponding grid cell.
+3. For each point, compare against all points in its grid cell and neighboring grid cells, always maintaining the minimum distance computed.
+4. Print the minimum distance.
+
+---
+
+
