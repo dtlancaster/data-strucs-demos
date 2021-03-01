@@ -6,7 +6,8 @@
 [5. Hash Tables](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#5-hash-tables)  
 [6. Priority Queues](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#6-priority-queues)  
 [7. Recursion](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#7-recursion)  
-[8. Sets](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#8-sets)
+[8. Sets](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#8-sets)  
+[9. Stacks](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#9-stacks)
 
 ## 1. Binary Search Trees
 
