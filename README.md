@@ -3,7 +3,8 @@
 [2. Dynamic Sequences](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#2-dynamic-sequences)  
 [3. Graphs](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#3-graphs)  
 [4. Hash Functions](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#4-hash-functions)  
-[5. Hash Tables](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#5-hash-tables)
+[5. Hash Tables](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#5-hash-tables)  
+[6. Priority Queues](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#6-priority-queues)
 
 ## 1. Binary Search Trees
 
