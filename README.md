@@ -5,7 +5,8 @@
 [4. Hash Functions](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#4-hash-functions)  
 [5. Hash Tables](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#5-hash-tables)  
 [6. Priority Queues](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#6-priority-queues)  
-[7. Recursion](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#7-recursion)
+[7. Recursion](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#7-recursion)  
+[8. Sets](https://github.com/dtlancaster/data-strucs-demos/blob/master/README.md#8-sets)
 
 ## 1. Binary Search Trees
 
@@ -247,3 +248,23 @@ In our integer set, an assert statement checks for valid input on both the ```in
 The ```IntSet``` class implements all the operations using an array as the underlying implementation. In this demo, we will change the implementation to singly linked lists.
 
 ---
+
+## 9. Stacks
+
+For this demo, we first build an integer stack data structure, then use it to solve a problem of computing the molecular mass of a chemical molecule.
+
+### I. Integer Stack
+
+An integer stack data structure is a stack that holds integer data and supports two operations:
+
+```push(x)```: This operation pushes an integer *x* onto the stack. You are guaranteed to not have more than 100 elements on the stack.
+
+```pop()```: This operation pops the last pushed element from the stack. Only positive integers will be stored on the stack, so this method returns -1 if a user attempts to pop from an empty stack.
+
+### II. Molecular Mass
+
+A molecular can be defined as a sequence of atoms, and represented by a chemical formula consisting of letters denoting these atoms. E.g. letter H denotes an atom of hydrogen, C denotes an atom of carbon, O denotes an atom of oxygen, and the formula COOH represents a molecular consisting of one atom of carbon, two atoms of oxygen, and one atom of hydrogen.
+
+To write some formulas efficiently, we use the following rules. Letters denoting some atoms can be grouped by enclosing in parentheses, e.g. formula CH(OH) contains group OH. Groups can be nested, i.e., a group can also contain other groups. To simplify a formula, consecutive occurrences of the same letter can be replaced with that letter followed by a number of these occurrences. E.g. formula COOHHH can be written as CO2H3 and it represents a molecule consisting of one atom of carbon, two atoms of oxygen, and three atoms of hydrogen. Furthermore, consecutive occurrences of the same group can be replaced with that group followed by a number of these occurrences. E.g. formula CH (CO2H) (CO2H) (CO2H) can be written as CH(CO2H)3 and the molecule represented by both of these formulas consists of four atoms of carbon, four atoms of hydrogen, and six atoms of oxygen. A number written after a letter or a group is always greater than or equal to 2 and less than or equal to 9. A mass of molecule is a sum of masses of all its atoms. One atom of hydrogen has mass 1, one atom of carbon has mass 12, and one atom of oxygen has mass 16. 
+
+```MolecularMass.java``` takes a string representation of a molecule as input and prints its total molecular mass. The input is guaranteed to come with only characters C, H, or O, and strictly follows the rules given above (that is, one doesn't have to check for valid input). It is also guaranteed that there are no more than 100 characters in the input.
