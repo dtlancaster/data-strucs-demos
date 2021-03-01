@@ -227,3 +227,23 @@ This problem asks to place *n* queens on a *n* x *n* chess board such that none 
 To count all possible solutions, they are generated recursively. For example, note that there must be exactly one queen in each row. Therefore, we can generate the solutions row-by-row. That is, we loop through all possible locations for the queen in the first row, then recursively complete the board by checking for each of these all possible locations in the second row, and so on. In code, there are several ways we can write this; for instance, we can maintain the current state of the board in a global (possibly 2D) array, and write a method ```check_row(int r)``` that tries all possibilities for row ```r``` one by one, for each of them calling ```check_row(r + 1)``` to recursively complete the board. 
 
 The program takes a single integer *n* as input an dpirnts out a single integer specifying te number of distinct solutions to the n-queens problem.
+
+---
+
+## 8. Sets
+
+This program is designed to demonstrate arrays and linked lists. It also helps us understand the notion of an abstract data type, that is, changing the underlying implementation of an ADT does not affect other programs that only interact with the ADT through its public interface.
+
+### I. Integer Set
+
+In this demo, we will be changing an implementation of the integer set data structure from arrays to linked lists. A set data structure maintains a collection of non-duplicated elements, and supports the following operations:
+
+```insert(key)``` that inserts a new key into the set.
+```remove(key)``` that removes the key from the set.
+```find(key)``` that finds if a given key is present or absent in the set.
+
+In our integer set, an assert statement checks for valid input on both the ```insert``` and ```remove``` operations. That is, it checks if the newly inserted key is not a duplicate during ```insert```, and that the removed key is present during ```remove```. In addition, the ```print``` method prints the contents of the set in **sorted** order.
+
+The ```IntSet``` class implements all the operations using an array as the underlying implementation. In this demo, we will change the implementation to singly linked lists.
+
+---
