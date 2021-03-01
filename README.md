@@ -198,3 +198,31 @@ In this problem, we can use a priority queue to maintain a set of intervals with
 *d* = *c* - (*n* - *m*) *f*(*n*) + (*p* - *m*) *f*(*p*) + (*n* - *p*) *f*(*n*)
 
 If the new area computed does not significantly change from the old area, then this gives a good stopping point for our algorithm. Since we are using doubles, we can check for this condition using |*d* - *c*| ≤ *e*, for some precision *e*. Otherwise, we insert our two new intervals into the priority queue, update the current area *c* = *d*, and continue with the next iteration of the algorithm. When the algorithm stops, *c* will hold the current area computed.
+
+---
+
+## 7. Recursion
+
+In this program, we will demonstrate recursion. In particular, we will solve the famous 3*n* + 1 problem using recursion and memorization which is a technique of having a look-up table to speed up searching for solutions. We will also solve the famous *n*-queens problem, which asks for placing *n* queens on an *n* x *n* chess board such taht no two queens attack each other.
+
+### I. The 3*n* + 1 Problem
+
+This problem has intrigued mathematicians for a very long time. The problem is simply stated in the algorithm below:
+
+1. Start with any positive integer *n*.
+2. If *n* == 1, STOP.
+3. If *n* is even, *n* = *n*/2.
+4. If *N* is odd, *n* = 3*n* + 1
+5. Go to step (2).
+
+This problem goes by many names, including "the Collatz problem", after a German mathematician named Lothar Collatz. He conjectured that the algorithm always stops for any positive number *n*. Though this is not proven, it is known that the algorithm always terminates for integers in the range 1 ... 100,000,000. For any *n*, the sequence of values it takes is called the Collatz sequence, and the length of this sequence is called the Collatz length. For example, for *n* = 15, the Collatz sequence is ```15 46 23 70 35 106 53 160 80 40 20 10 5 16 8 4 2 1``` and its Collatz length is 18.
+
+```Collatz.java``` accepts two positive integers *a*, *b*, with 1 ≤ *a* ≤ *b* ≤ 100,000,000, and prints the number *x* in the range (*a*, *b*) both inclusive with the maximum Collatz length. The proram contains a recursive method named ```collatzLength(x)```, that finds the Collatz length for ```x```. Having a table of solutions will significantly speed up the program. For instance, if the Collatz length of 15 is computed and stored in a table, then the Collatz length of 30 can be computed quickly by looking up the solution to 15 instead of re-computing it.
+
+### II. The N-Queens Problem
+
+This problem asks to place *n* queens on a *n* x *n* chess board such that none of the queens are attacking each other. A queen can see an arbitrary number of squares in the horizontal, vertical, or diagonal directions. There can be many solutions to the n-queens problem. For *n* = 8, for example, there are 92 distinct solutions. This implementation computes the number of solutions for any small value of *n* as quickly as possible.
+
+To count all possible solutions, they are generated recursively. For example, note that there must be exactly one queen in each row. Therefore, we can generate the solutions row-by-row. That is, we loop through all possible locations for the queen in the first row, then recursively complete the board by checking for each of these all possible locations in the second row, and so on. In code, there are several ways we can write this; for instance, we can maintain the current state of the board in a global (possibly 2D) array, and write a method ```check_row(int r)``` that tries all possibilities for row ```r``` one by one, for each of them calling ```check_row(r + 1)``` to recursively complete the board. 
+
+The program takes a single integer *n* as input an dpirnts out a single integer specifying te number of distinct solutions to the n-queens problem.
