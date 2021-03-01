@@ -160,4 +160,30 @@ Each of these grid cells contain a linked list to store all the points, and roug
 
 ---
 
+## 6. Priority Queues
 
+In this program, we've built a max-priority queue data structure implemented as a binary heap, and then use it to perform numerical omputations. Specifically, we've computed an approximate solution to an area unde ra curve.
+
+### I. Max-Heap
+
+A max-heap is an implementation of the max-priority queue data structure that supports two fundamental operations:
+
+```insert(k)```: This inserts a new element ```k``` into the heap.
+
+```remove_max()```: Returns and removes the max element in the heap. Returns ```null``` if the heap is empty.
+
+THe max-heap can be encoded as an array and visualized as a tree that is complete at every level except possibly the last. The tree also satisfies the max-heap property--if element with key *k* is stored at the root, then both its left and right subtrees contain keys at most *k*. The elements of the heap are stored in an array one level at a time from left to right. This allows us to compute the parent, left, and right child of every node by performing arithmetic on the indices. For example, if the array uses 1-based indexing, then the following arithmetic operations work:
+
+```parent(i) = i / 2;``` computes the index of the parent of a heap element at position ```i```.
+
+```left(i) = 2 * i;``` computes the index of the left child of a heap element at position ```i```.
+
+```right(i) = 2 * i + 1;``` computes the index of the right child of a heap element at position ```i```.
+
+The heap operations ```insert``` and ```remove_max``` can be performed using other opations like ```siftdown(i)``` and ```siftup(i)```, which fix violations of the heap property for an element at position ```i``` with any of its children and parent respectively, by repeatedly swapping with the smallest child (for ```siftdown```) or parent (for ```siftup```). To perform ```insert```, we put the new elements at the next available position in the array and call ```siftup```, and for ```remove_max```, we swap the root with the last element and call ```siftdown``` at the root. All operations in a binary heap take only *O*(log *n*) time.
+
+We will be storing a set of intervals as a max-heap keyed primarily on their lengths. Each interval is represented using its starting and ending points on the number line. The file ```Interval.java``` includes an argument constructor, several accessor methods, and a ```compareTo``` method that is used to comapre two ```Interval``` objects. The comparison function compares the two ```Interval``` objects based on their lenghts first, and if both lengths are equal, then compares their starting points. Note that when creating an interval with starting point *a*<sub>*i*</sub> and ending point *b*<sub>*i*</sub>, the class assumes that the constructor will always be called with *a*<sub>*i*</sub> ≤ *b*<sub>*i*</sub>. Since these are stored as ```double``` variables, which could potentially have floating point round off errors, the comparison function checks if the two doubles being compared are close together up to a predetermined error.
+
+The ```PriorityQueue``` class currently includes an array that encodes a max-heap, and keeps track of the size of the allocated buffer and the number of elements stored. It needs to expand the buffer if a new element is inserted into a full buffer. It also includes a ```print``` function that prints the contents of the array. Please fill the two main priority queue methods--```insert(k)```, that inserts a new interval ```k``` into the heap, and ```remove_max```, that returns the largest (based on the comparison function) interval in the heap.
+
+### II. Area Under a Curve
